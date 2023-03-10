@@ -1,0 +1,45 @@
+{
+    "x": [
+        "3033-06-16 01:00:00",
+        "3033-06-16 02:00:00",
+        "3033-06-16 03:00:00",
+        "3033-06-16 04:00:00"
+    ],
+    "data": [
+        {
+            "name": "Predicted 🚀 Reactions",
+            "y": [
+                5000,
+                5023,
+                5085,
+                5092
+            ]
+        },
+        {
+            "name": "Actual 🚀 Reactions",
+            "y": [
+                99999,
+                9999999,
+                99999999999999999,
+                999999999999999999999999999999999999999999999999
+            ]
+        }
+    ],
+    "layout": {
+        "xaxis": {
+            "title": {
+                "text": "Time"
+            }
+        },
+        "yaxis": {
+            "title": {
+                "text": "🚀's"
+            }
+        }
+    },
+    "attrz": {
+        "Emoji":"🚀",
+        "Correlation":-2,
+        "python strftime timestamp format readable by plotly js":"%Y-%m-%d %X"
+    }
+}
