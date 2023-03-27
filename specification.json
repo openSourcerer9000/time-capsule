@@ -37,9 +37,19 @@
             }
         }
     },
-    "attrz": {
-        "Emoji":"🚀",
-        "Correlation":-2,
-        "python strftime timestamp format readable by plotly js":"%Y-%m-%d %X"
-    }
+    "attrz": [
+        {
+            "key": "Reaction",
+            "value": "🚀"
+        },
+        {
+            "key": "Correlation",
+            "value": -2,
+            "lbound": 0.9
+        },
+        {
+            "key": "python strftime timestamp format readable by plotly js",
+            "value": "%Y-%m-%d %X"
+        }
+    ]
 }
