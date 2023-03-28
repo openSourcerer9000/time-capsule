@@ -77,40 +77,40 @@ def loadTimeCapsule(outJSON,tcdf,attrz=None,layout={},data={},
                 )
 
 # attrz helper funcs:
-def attrzFromDict(attrzdict):
-    '''returns attrz format dict with key,value explicit\n
-    {'Name': '0638', 'corr': 0.81, 'MAE': 0.46, 'RMSE': 0.56, 'NSE': 0.54}\n
-    =>\n
-    [{'key': 'Name', 'value': '0638'},\n
-    {'key': 'corr', 'value': 0.81},\n
-    {'key': 'MAE', 'value': 0.46},\n
-    {'key': 'RMSE', 'value': 0.56},\n
-    {'key': 'NSE', 'value': 0.54}]\n
-    '''
-    attrz = [
-    {
-        'key':key,
-        'value':val,
-    } for key,val in attrzdict.items() ]
-    return attrz
+# def attrzFromDict(attrzdict):
+#     '''returns attrz format dict with key,value explicit\n
+#     {'Name': '0638', 'corr': 0.81, 'MAE': 0.46, 'RMSE': 0.56, 'NSE': 0.54}\n
+#     =>\n
+#     [{'key': 'Name', 'value': '0638'},\n
+#     {'key': 'corr', 'value': 0.81},\n
+#     {'key': 'MAE', 'value': 0.46},\n
+#     {'key': 'RMSE', 'value': 0.56},\n
+#     {'key': 'NSE', 'value': 0.54}]\n
+#     '''
+#     attrz = [
+#     {
+#         'key':key,
+#         'value':val,
+#     } for key,val in attrzdict.items() ]
+#     return attrz
 
-def addBound(attrz,key,lbound=None,rbound=None):
-    '''update attrz object in place with lbound,rbound at key'''
-    df = pd.DataFrame(attrz)
-    idx = df[df.key==key].index[0]
+# def addBound(attrz,key,lbound=None,rbound=None):
+#     '''update attrz object in place with lbound,rbound at key'''
+#     df = pd.DataFrame(attrz)
+#     idx = df[df.key==key].index[0]
 
-    if lbound:
-        attrz[idx].update({'lbound':lbound})
-    if rbound:
-        attrz[idx].update({'rbound':rbound})
+#     if lbound:
+#         attrz[idx].update({'lbound':lbound})
+#     if rbound:
+#         attrz[idx].update({'rbound':rbound})
 
-def addBounds(attrz,bounds):
-    '''add bounds to attrz in place\n
-    bounds in form\n
-    bounds = {\n
-        'corr':{'lbound':0.9},\n
-        'MAE':{'rbound':0.75},\n
-        'RMSE':{'rbound':0.75},\n
-        'NSE':{'lbound':0.5},\n
-    }'''
-    [addBound(attrz,key,**kwargz) for key,kwargz in bounds.items()]
+# def addBounds(attrz,bounds):
+#     '''add bounds to attrz in place\n
+#     bounds in form\n
+#     bounds = {\n
+#         'corr':{'lbound':0.9},\n
+#         'MAE':{'rbound':0.75},\n
+#         'RMSE':{'rbound':0.75},\n
+#         'NSE':{'lbound':0.5},\n
+#     }'''
+#     [addBound(attrz,key,**kwargz) for key,kwargz in bounds.items()]
