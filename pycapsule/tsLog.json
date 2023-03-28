@@ -161,18 +161,6 @@
             }
         }
     },
-    "attrz": [
-        {"key":"corr max",
-        "value": 0.94,
-        "lbound":0.9},
-        {"key":"MAE min",
-        "value": 0.34,
-        "rbound":0.75},
-        {"key":"RMSE min",
-        "value": 0.43,
-        "rbound":0.75},
-        {"key":"NSE max",
-        "value": 1.0,
-        "lbound":0.5}
-    ]
+    "attrz": 
+    {"corr max": 0.93, "MAE min": 0.7, "RMSE min": 0.73, "NSE max": -0.36}
 }
