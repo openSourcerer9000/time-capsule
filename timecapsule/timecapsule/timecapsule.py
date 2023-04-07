@@ -43,9 +43,9 @@ class NanConverter(json.JSONEncoder):
         obj = nan2None(obj)
         return super().iterencode(obj, *args, **kwargs)
     
-def load(outJSON,tcdf,attrz=None,layout={},data={},
+def deposit(outJSON,tcdf,attrz=None,layout={},data={},
                     ytitle=None,JSONindent=None):
-    '''load outJSON timecapsule with specified data according to the timecapsule specification\n
+    '''bounce outJSON timecapsule with specified data according to the timecapsule specification\n
     tcdf.index is the unified X axis, with xtitle as tcdf.index.name\n
     ytitle is the title of the y axis\n
     each col of tcdf is a separate feature to be plotted, with the col name as the feature name\n
