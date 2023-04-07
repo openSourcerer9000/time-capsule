@@ -149,8 +149,10 @@ def plot(timecapsule,title='',
     # add scatter plot if tc['data']
     [
     fig.add_trace(
-        go.Scatter(x=tc['x'],**data,
-            marker={'color':cmap[i]}
+        go.Scatter(x=tc['x'],
+            marker={'color':cmap[i]},
+            **{'mode':'lines',# defaults
+                **data}, # defaults get overriden if they appear in data
             ),
     row=1,
     col=1)
