@@ -1,0 +1,34 @@
+package:
+  name: "timecapsule"
+  version: "0.1.0"
+
+source:
+  # Relative path to the parent directory.
+  path: ..
+
+requirements:
+  host:
+    - python
+    - setuptools
+  build:
+    - python {{ python }}
+  run:
+    - python
+    # dependencies are defined in setup.py
+    {% for dep in data['install_requires'] %}
+    - {{ dep.lower() }}
+    {% endfor %}
+    # - dependencyPackage1
+    # - dependencyPackage2
+    # ...
+
+about:
+  home: https://github.com/openSourcerer9000/timecapsule
+  license: MIT license
+  license_familY: MIT license
+  license_file: LICENSE
+  summary: "Minimal specification for timeseries data for the web, chunked into lightweight jsons. Provided as a Python library which interprets it into Plotly plots."
+
+extra:
+  recipe-maintainers:
+    - openSourcerer9000
