@@ -175,6 +175,8 @@ def plot(timecapsule,title='',
             def testbounds(key,val):
                 if key not in boundz:
                     return 'rgba(0,0,0,0)' 
+                if val is None:
+                    return red
                 if      val > boundz[key]['lbound'] \
                     and val < boundz[key]['rbound']:
                     return green 
