@@ -116,7 +116,7 @@ def _bothBounds(bnds):
 
 
 alpha=0.4
-def plotTimeCapsule(timecapsule,title='',
+def plot(timecapsule,title='',
     width=1600,height=600,
     cmap=["#b3294e","#4829B2",'#0ff54c','#f2b200'],
     bgcolor = 'hsl(210, 10%, 60%)',
@@ -264,7 +264,7 @@ htmlcfg = {'displaylogo': False,
     ],
 }
 
-def TimeCapsulesToHTML(TCdir,outHTML,bounds=None,
+def toHTML(TCdir,outHTML,bounds=None,
     description=lambda reqs: f'Targets:<br>{reqs}',
     doctitle='How to use this document',
     plotTitleFunc=lambda nm: f'{nm} - Simulated vs Observed Stage',
@@ -287,7 +287,7 @@ def TimeCapsulesToHTML(TCdir,outHTML,bounds=None,
     insight = stems=='insights'
     jsons = jsons[insight].to_list() + jsons[~insight].to_list() 
 
-    figz = [plotTimeCapsule(jsn,
+    figz = [plot(jsn,
                 title=plotTitleFunc(jsn.stem.replace('ts_','')),
                 bounds=bounds,
                 width=width,height=height,
