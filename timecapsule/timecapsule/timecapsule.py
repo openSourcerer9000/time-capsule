@@ -269,7 +269,7 @@ htmlcfg = {'displaylogo': False,
 }
 
 def toHTML(TCdir,outHTML,bounds=None,
-    description=lambda reqs: f'Targets:<br>{reqs}',
+    description=lambda reqs: f'Metric targets:<br>{reqs}',
     doctitle='How to use this document',
     plotTitleFunc=lambda nm: f'{nm} - Simulated vs Observed Stage',
     descriptionPadding=100,
@@ -359,7 +359,7 @@ def toHTML(TCdir,outHTML,bounds=None,
 
     outHTML.unlink(missing_ok=True)
     outHTML.write_text(doc)
-    print(f'{TCdir} plots written to {outHTML}')
+    print(f'plots from\n {TCdir} written to \n{outHTML}')
     if openHTML:
         # open in default web browser:
         subprocess.Popen([ "explorer", str(outHTML) ])
