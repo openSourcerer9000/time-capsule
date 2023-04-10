@@ -138,6 +138,8 @@ def plot(timecapsule,title='',
     column_widths = [(width-absTblWidth)/width , absTblWidth/width]
     # creates figure and sets number of rows and columns, relative column widths, spacings between plots, titles, and formats
     print('DATA?','data' in tc)
+    print(bold(title) if 'data' in tc)
+
     fig=make_subplots(
         rows=1,
         cols=2,
@@ -291,7 +293,7 @@ def toHTML(TCdir,outHTML,bounds=None,
     stems = jsons.map(lambda f:f.stem)
     insight = stems=='insights'
     jsons = jsons[insight].to_list() + jsons[~insight].to_list() 
-    [ print('TITLE',plotTitleFunc(jsn.stem.replace('ts_',''))) for jsn in jsons ]
+    # [ print('TITLE',plotTitleFunc(jsn.stem.replace('ts_',''))) for jsn in jsons ]
     figz = [plot(jsn,
                 title=plotTitleFunc(jsn.stem.replace('ts_','')),
                 bounds=bounds,
