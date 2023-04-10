@@ -290,7 +290,7 @@ def toHTML(TCdir,outHTML,bounds=None,
     stems = jsons.map(lambda f:f.stem)
     insight = stems=='insights'
     jsons = jsons[insight].to_list() + jsons[~insight].to_list() 
-
+    print('TITLE',plotTitleFunc(jsn.stem.replace('ts_','')))
     figz = [plot(jsn,
                 title=plotTitleFunc(jsn.stem.replace('ts_','')),
                 bounds=bounds,
