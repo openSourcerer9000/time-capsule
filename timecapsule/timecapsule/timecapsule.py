@@ -138,7 +138,7 @@ def plot(timecapsule,title='',
     column_widths = [(width-absTblWidth)/width , absTblWidth/width]
     # creates figure and sets number of rows and columns, relative column widths, spacings between plots, titles, and formats
     # print('DATA?','data' in tc)
-    print(bold(title) if 'data' in tc else 'no data')
+    # print(bold(title) if 'data' in tc else 'no data')
 
     fig=make_subplots(
         rows=1,
