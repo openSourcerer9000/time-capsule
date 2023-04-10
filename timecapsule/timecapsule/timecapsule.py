@@ -216,34 +216,44 @@ def plot(timecapsule,title='',
             row=1,
             col=2
             )
-    fig = fig.update_layout(
-        {
-            'paper_bgcolor':bgcolor,
-            'plot_bgcolor':bgcolor,#'hsla(210, 26%, 14%, 0)',
-            'margin': {
-                'l': 40,
-                'r': 50,
-                "b": 40,
-                't': 20,
-                # // t: 40, //for plot title
-                # 'pad': 20
+
+    # workaround for crappy plotly bug https://community.plotly.com/t/subplot-titles-disappearing-when-adding-annotations/5256/8
+    annotations = [a.to_plotly_json() for a in fig["layout"]["annotations"]]
+    lyt = {
+        'paper_bgcolor':bgcolor,
+        'plot_bgcolor':bgcolor,#'hsla(210, 26%, 14%, 0)',
+        'margin': {
+            'l': 40,
+            'r': 50,
+            "b": 40,
+            't': 20,
+            # // t: 40, //for plot title
+            # 'pad': 20
+        },
+        'width':width,
+        'height':height,#*len(tcs),
+        'font': {
+            # 'family': 'Roboto',
+            # 'size': 18,
+            'color': 'black'
+        },
+            'legend': {
+                'bgcolor':bgcolor,
+                'orientation': "v",
+                'xanchor': "left",
+                'yanchor': "bottom",
+                'y': 1.0,
+                'x': 0
             },
-            'width':width,
-            'height':height,#*len(tcs),
-            'font': {
-                # 'family': 'Roboto',
-                # 'size': 18,
-                'color': 'black'
-            },
-                'legend': {
-                    'bgcolor':bgcolor,
-                    'orientation': "v",
-                    'xanchor': "left",
-                    'yanchor': "bottom",
-                    'y': 1.0,
-                    'x': 0
-                },
-            **_emptyDict(tc)['layout']})
+        **_emptyDict(tc)['layout']}
+
+    if 'annotations' in lyt:
+        # specifically subplot titles need to go first for some reason
+        lyt['annotations'] = annotations + lyt['annotations']
+    else:
+        lyt['annotations'] = annotations
+        
+    fig=fig.update_layout(lyt)
     return fig
 
 def boundsToEnglish(bounds,newline='<br>'):
