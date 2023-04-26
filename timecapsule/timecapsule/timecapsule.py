@@ -153,7 +153,7 @@ def plot(timecapsule,title='',
     [
     fig.add_trace(
         go.Scatter(x=tc['x'],
-            marker={'color':cmap[i]},
+            **({'marker':{'color':cmap[i]}} if len(cmap)>i else {}),
             **{'mode':'lines',# defaults
                 **data}, # defaults get overriden if they appear in data
             ),
@@ -180,8 +180,8 @@ def plot(timecapsule,title='',
                     return 'rgba(0,0,0,0)' 
                 if val is None:
                     return red
-                if      val > boundz[key]['lbound'] \
-                    and val < boundz[key]['rbound']:
+                if      val >= boundz[key]['lbound'] \
+                    and val <= boundz[key]['rbound']:
                     return green 
                 else:
                     return red
