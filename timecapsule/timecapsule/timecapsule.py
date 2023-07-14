@@ -51,7 +51,18 @@ def deposit(outJSON,tcdf,attrz=None,layout={},data={},
     each col of tcdf is a separate feature to be plotted, with the col name as the feature name\n
     attrz: dict of attrz OR func which takes tcdf and computes its attrz\n
     layout: dict to be fed to plotly JS layout property, as specified here \n
-    https://plotly.com/javascript/reference/layout/
+    https://plotly.com/javascript/reference/layout/\n\n
+
+        jsn = {
+        'x':X,
+        'data':[
+            {'name':col,
+            'y':df[col].to_list(),
+             **data
+            } for col in df.columns
+        ],
+        'layout':lyt
+    }
     '''
     #TODO if series col = 0
     df = pd.DataFrame(tcdf)
@@ -79,7 +90,9 @@ def deposit(outJSON,tcdf,attrz=None,layout={},data={},
         'data':[
             {'name':col,
             'y':df[col].to_list(),
-             **data
+            **{key:val if not hasattr(val,'__call__') else val(df[col])
+                 for key,val in data.items() }
+             
             } for col in df.columns
         ],
         'layout':lyt
@@ -94,6 +107,7 @@ def deposit(outJSON,tcdf,attrz=None,layout={},data={},
                 cls=NanConverter,
                 indent=JSONindent
                 )
+
 
 from pathlib import Path
 import pandas as pd, numpy as np
