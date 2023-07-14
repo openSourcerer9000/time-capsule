@@ -53,12 +53,15 @@ def deposit(outJSON,tcdf,attrz=None,layout={},data={},
     layout: dict to be fed to plotly JS layout property, as specified here \n
     https://plotly.com/javascript/reference/layout/\n\n
 
+    data adds values to data for each trace, OR you may also pass in funcs for dict values as desired and it will compute the function on df[col] for each\n
+
         jsn = {
         'x':X,
         'data':[
             {'name':col,
             'y':df[col].to_list(),
-             **data
+            **{key:val if not hasattr(val,'__call__') else val(df[col])
+                 for key,val in data.items() }
             } for col in df.columns
         ],
         'layout':lyt
