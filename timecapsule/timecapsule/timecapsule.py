@@ -66,6 +66,8 @@ def deposit(outJSON,tcdf,attrz=None,layout={},data={},
         ],
         'layout':lyt
     }
+    \n\n
+    returns jsn
     '''
     #TODO if series col = 0
     df = pd.DataFrame(tcdf)
@@ -110,6 +112,8 @@ def deposit(outJSON,tcdf,attrz=None,layout={},data={},
                 cls=NanConverter,
                 indent=JSONindent
                 )
+    
+    return jsn
 
 
 from pathlib import Path
