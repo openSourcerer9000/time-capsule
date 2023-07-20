@@ -75,6 +75,9 @@ def deposit(outJSON,tcdf,attrz=None,layout={},data={},
         X = df.index.strftime('%Y-%m-%d %X').to_list()
     else:
         X = df.index.to_list()
+    # because NaNs screw up json, this is dealt with in the cls,
+    #  but passing the dict obj to an api will need this handled first
+    X = nan2None(X) 
         
     lyt = deepcopy(layout)
 
@@ -94,7 +97,7 @@ def deposit(outJSON,tcdf,attrz=None,layout={},data={},
         'x':X,
         'data':[
             {'name':col,
-            'y':df[col].to_list(),
+            'y':nan2None( df[col].to_list() ),
             **{key:val if not hasattr(val,'__call__') else val(df[col])
                  for key,val in data.items() }
              
