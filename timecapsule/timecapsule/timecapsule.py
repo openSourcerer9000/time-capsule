@@ -315,7 +315,7 @@ def toHTML(TCdir,outHTML,bounds=None,
     bgcolor = 'hsl(210, 10%, 60%)',
     green=f'rgba(0, 255, 64,{alpha})',
     red=f'rgba(255, 0, 34,{alpha})',
-    cmap=["#b3294e","#4829B2",'#0ff54c','#f2b200'],
+    cmap=["#4829B2","#b3294e",'#0ff54c','#f2b200'],
     openHTML=True
     ):
     '''
