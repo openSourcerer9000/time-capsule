@@ -4,6 +4,7 @@ import pandas as pd, numpy as np
 from pandas.api.types import is_datetime64_any_dtype as is_datetime
 from copy import deepcopy
 from pydantic.utils import deep_update
+import xarray as xr
 # from funkshuns import *
 
 try:
@@ -118,6 +119,66 @@ def deposit(outJSON,tcdf,attrz=None,layout={},data={},
     
     return jsn
 
+def depositDSsuite(ds,outsuitepth,
+            ytitle='WSEL (ft)',
+            trialdim='plan',
+            tdim = 'Time (UTC)',
+            STAdim = 'Gauge',
+            outHTMLdir=None,
+            htmlsuffstr='',
+        ):
+    '''if outHTMLdir, bounce each trial (along trialdim) in DS suite there\n
+    htmlsuffstr: additional text in outHTMLdir/f'{plan}{htmlsuffstr}.html' outputs'''
+    assert set(ds.dims) == {tdim,STAdim,trialdim}, (set(ds.dims) ,{tdim,STAdim,trialdim})
+
+    planz = ds[trialdim].values
+    for plan in planz:
+        outtrialpth = outsuitepth/str(plan)
+        pln = ds.sel({trialdim:plan})
+        pln=pln.drop(trialdim)
+        depositDStrial(pln,outtrialpth,ytitle=ytitle,tdim=tdim,STAdim=STAdim,
+            outHTML=outHTMLdir/f'{plan}{htmlsuffstr}.html' if outHTMLdir else None)
+
+def depositDStrial(ds,outtrialpth,
+            outHTML=None,
+            ytitle='WSEL (ft)',
+            tdim = 'Time (UTC)',
+            STAdim = 'Gauge'
+        ):
+    '''if outHTML Path, plot full trial there'''
+    assert set(ds.dims) == {tdim,STAdim}, (set(ds.dims) ,{tdim,STAdim})
+    
+    outtrialpth.mkdir(parents=True,exist_ok=True)
+    gauges = ds[STAdim].values
+    for gaugename in gauges:
+        tcjson = outtrialpth/f'ts_{gaugename}.json'
+        gage = ds.sel({STAdim:gaugename})
+        gage=gage.drop(STAdim)
+        depositDS(gage,tcjson,ytitle=ytitle,tdim=tdim)
+
+    print(f'Serialized to {outtrialpth}')
+
+    if outHTML:
+        outHTML.parent.mkdir(parents=True,exist_ok=True)
+        toHTML(outtrialpth,outHTML)
+        print(f'{outtrialpth} plotted to {outHTML}')
+
+def depositDS(ds,tcjson,
+            ytitle='WSEL (ft)',
+            tdim = 'Time (UTC)',
+        ):
+    '''at gaugename to timecapsule'''
+    assert set(ds.dims) == {tdim}, (set(ds.dims) ,tdim)
+    all_coords = set(ds.coords)
+    dim_coords = set(ds.dims)
+    non_dim_coords = all_coords - dim_coords
+
+    gage = ds.drop_vars(non_dim_coords)
+    df = gage.to_pandas()
+
+    deposit(tcjson,df,ytitle=ytitle,data={'line':{'width':1}})
+    print(f'Bounced to {tcjson}')
+
 
 from pathlib import Path
 import pandas as pd, numpy as np
@@ -138,6 +199,7 @@ def _bothBounds(bnds):
     bnd.update(bnds)
     return bnd
 
+# plotting TODO separate .py
 
 alpha=0.4
 def plot(timecapsule,title='',
