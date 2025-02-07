@@ -108,6 +108,9 @@ def deposit(outJSON,tcdf,attrz=None,layout={},data={},
     
     if attrz:
         attrs = attrz(df) if callable(attrz) else attrz
+        # demo
+        # if 'oops' in attrs.keys():
+        #     attrs.pop('oops')
         jsn.update({'attrz':attrs})
 
     with open(outJSON, 'w') as outfile:
@@ -188,6 +191,9 @@ def plot(timecapsule,title='',
 
     #add table
     if 'attrz' in tc:
+        # demo
+        if 'oops' in tc['attrz'].keys():
+            tc['attrz'].pop('oops')
 
         key = list(tc['attrz'].keys())[0]
         headr = [key, tc['attrz'].pop(key) ]
