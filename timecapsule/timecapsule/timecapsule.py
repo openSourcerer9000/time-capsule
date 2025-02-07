@@ -111,11 +111,12 @@ def deposit(outJSON,tcdf,attrz=None,layout={},data={},
         attrs = attrz(df) if callable(attrz) else attrz
         jsn.update({'attrz':attrs})
 
-    with open(outJSON, 'w') as outfile:
-        json.dump(jsn , outfile,
-                cls=NanConverter,
-                indent=JSONindent
-                )
+    if outJSON:
+        with open(outJSON, 'w') as outfile:
+            json.dump(jsn , outfile,
+                    cls=NanConverter,
+                    indent=JSONindent
+                    )
     
     return jsn
 
