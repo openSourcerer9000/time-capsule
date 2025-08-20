@@ -88,7 +88,12 @@ def deposit(outJSON,tcdf,attrz=None,layout={},data={},
             'xaxis': {
                 'title':{'text':xtitle}}
         })
-    ytitle = ytitle or df.columns.name
+    legendtitle = lyt.get('legend',{}).get('title',{}).get('text',None) or df.columns.name
+    if legendtitle:
+        lyt = deep_update(lyt,{
+            'legend': {
+                'title':{'text':legendtitle}}
+        })
     if ytitle:
         lyt = deep_update(lyt,{
             'yaxis': {
