@@ -45,7 +45,7 @@ class NanConverter(json.JSONEncoder):
         return super().iterencode(obj, *args, **kwargs)
     
 def deposit(outJSON,tcdf,attrz=None,layout={},data={},
-                    ytitle=None,JSONindent=None):
+                    xtitle=None,ytitle=None,JSONindent=None):
     '''bounce outJSON timecapsule with specified data according to the timecapsule specification\n
     tcdf.index is the unified X axis, with xtitle as tcdf.index.name\n
     ytitle is the title of the y axis\n
@@ -88,6 +88,7 @@ def deposit(outJSON,tcdf,attrz=None,layout={},data={},
             'xaxis': {
                 'title':{'text':xtitle}}
         })
+    ytitle = ytitle or df.columns.name
     if ytitle:
         lyt = deep_update(lyt,{
             'yaxis': {
@@ -508,3 +509,25 @@ def toHTML(TCdir,outHTML,bounds=None,
 #         'NSE':{'lbound':0.5},\n
 #     }'''
 #     [addBound(attrz,key,**kwargz) for key,kwargz in bounds.items()]
+
+def toDF(tc) -> pd.DataFrame:
+    """
+    Convert the custom JSON dict back into a pandas DataFrame. inverse of deposit
+    """
+    jsn = deepcopy(tc) if isinstance(tc,dict) \
+        else json.load(open(tc)) 
+    # Each entry in 'data' has 'name' = column name, 'y' = column values
+    cols = {}
+    for col_entry in jsn['data']:
+        col_name = col_entry['name']
+        cols[col_name] = col_entry['y']  # already a list
+
+    df = pd.DataFrame(cols)
+    if 'x' in jsn:
+        df.index = jsn['x']
+    df.index.name = jsn.get('layout', {}).get('xaxis', {}).get('title', {}).get('text', None)
+
+    df.attrs = jsn.get('attrz', {})
+    
+
+    return df
